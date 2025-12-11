@@ -1,7 +1,5 @@
 function plot_filter_analysis(b , a , Fs , D , k)
 
-close all;
-
 % b --> Numerator
 % a --> Denominator
 % Fs --> Sampling Frequency
@@ -62,11 +60,14 @@ ylabel('Group Delay (samples)') ;
 
 %% Ploting Impulse Response
 subplot(3,2,5) ;
-stem(0:(k-1)*D,b) ; 
-% Using stem function to because it plot discrete
-% 0:(k-1)*D to but impulses on 0,1000,2000,3000 not 1,1001,2001,3001
-title('Impulse Response of Echo System H');
-xlabel('Samples (n)');
-ylabel('Amplitude');
+delta = [1, zeros(1, (k-1)*D)] ;
+imp_resp = filter(b, a, delta) ;
+% Make impulse response as i did in the for loop
+
+stem(0:length(imp_resp)-1, imp_resp, 'filled') ;
+title('Impulse Response') ;
+xlabel('Samples (n)') ;
+ylabel('Amplitude') ;
+
 
 end
